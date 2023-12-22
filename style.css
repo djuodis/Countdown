@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap");
+
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    margin: 0;
+    text-align: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background: rgb(255,228,233);
+    background: radial-gradient(circle, rgba(255,228,233,1) 81%, rgba(135,155,255,1) 100%); 
+}
+
+.snowflake {
+    width: var(--size);
+    height: var(--size);
+    background: black; 
+    border-radius: 50%;
+    position: absolute;
+    top: 10vh;
+    animation: snowfall linear infinite;
+}
+
+@keyframes snowfall {
+    0% {
+        transform: translateY(-10vh);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(80vh);
+        opacity: 0;
+    }
+}
+
+.website {
+    padding-top: 100px;
+    height: 100%;
+    width: 100%;
+    background-image: url("snow (1980 x 1320).jpg");
+    background-size: cover;
+    background-position: center;
+    transform: scale(0.6);
+    opacity: 0;
+    transition: 2s;
+    border-radius: 30px;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.website.show {
+    transform: scale(0.8);
+    opacity: 1;
+}
+
+h1 {
+    font-size: 4em;
+    font-weight: 400;
+    margin-bottom: -50px;
+}
+
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: auto;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.countdown-container .element {
+    width: 180px;
+    height: 120px;
+    perspective: 400px;
+}
+
+.countdown-container .number {
+    font-size: 5em;
+    font-weight: 600;
+    margin-bottom: -20px;
+    transform: translateY(100%);
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes flip {
+    from {
+        transform: rotateX(0);
+    }
+    to {
+        transform: rotateX(360deg);
+    }
+}
+
+.flip-clock {
+    animation: flip 0.5s linear forwards;
+}
+
+
+@media (max-width: 426px) {
+    body {
+        margin-top: 50px;
+    }
+}
+
+
