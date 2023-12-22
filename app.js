@@ -9,6 +9,42 @@ let prevHours = null;
 let prevMinutes = null;
 let prevSeconds = null;
 
+const formatTime = (time) => {
+    return time < 10 ? `0${time}` : `${time}`;
+};
+
+const updateAndAnimate = (element, newValue, prevValue) => {
+    if (prevValue !== newValue) {
+        element.classList.remove('flip-clock');
+        void element.offsetWidth; // Trigger reflow to restart the animation
+        element.innerText = newValue;
+        element.classList.add('flip-clock');
+    }
+};
+
+const countdown = () => {
+    const newYears = "1 Jan 2024";
+    const newYearsDate = new Date(newYears);
+    const currentDate = new Date();
+    const totalSecondsLeft = (newYearsDate - currentDate) / 1000;
+    const days = Math.floor(totalSecondsLeft / 3600 / 24);
+    const hours = Math.floor(totalSecondsLeft / 3600) % 24;
+    const minutes = Math.floor(totalSecondsLeft / 60) % 60;
+    const seconds = Math.floor(totalSecondsLeft) % 60;
+
+    updateAndAnimate(daysElement, formatTime(days), prevDays);
+    prevDays = formatTime(days);
+
+    updateAndAnimate(hoursElement, formatTime(hours), prevHours);
+    prevHours = formatTime(hours);
+
+    updateAndAnimate(minutesElement, formatTime(minutes), prevMinutes);
+    prevMinutes = formatTime(minutes);
+
+    updateAndAnimate(secondsElement, formatTime(seconds), prevSeconds);
+    prevSeconds = formatTime(seconds);
+};
+
 const generateSnowflake = () => {
     const snowflake = document.createElement('div');
     snowflake.classList.add('snowflake');
@@ -36,95 +72,16 @@ const createSnowflakes = () => {
 };
 
 createSnowflakes();
-const newYears = "1 Jan 2024";
-const images = ["snow (1980 x 1320).jpg", 
-                "snow2 (1980 x 1320).jpg", 
-                "snow3 (1980 x 1320).jpg"];
-
-let currentImageIndex = 0;
-
-const countdown = () => {
-    const newYears = "1 Jan 2024";
-    
-
-    const newYearsDate = new Date(newYears);
-    const currentDate = new Date();
-    const totalSecondsLeft = (newYearsDate - currentDate) / 1000;
-    const days = Math.floor(totalSecondsLeft / 3600 / 24);
-    const hours = Math.floor(totalSecondsLeft / 3600) % 24;
-    const minutes = Math.floor(totalSecondsLeft / 60) % 60;
-    const seconds = Math.floor(totalSecondsLeft) % 60;
-
-    const newDays = formatTime(days);
-    const newHours = formatTime(hours);
-    const newMinutes = formatTime(minutes);
-    const newSeconds = formatTime(seconds);
-
-    updateAndAnimate(daysElement, newDays, prevDays);
-    updateAndAnimate(hoursElement, newHours, prevHours);
-    updateAndAnimate(minutesElement, newMinutes, prevMinutes);
-    updateAndAnimate(secondsElement, newSeconds, prevSeconds);
-
-    prevDays = newDays;
-    prevHours = newHours;
-    prevMinutes = newMinutes;
-    prevSeconds = newSeconds;
-
-    changeBackgroundImage();
-};
-const updateDays = (newDays) => {
-    if (prevDays !== null && prevDays !== newDays) {
-        daysElement.classList.remove('flip-clock');
-        void daysElement.offsetWidth; 
-        daysElement.innerText = newDays;
-        daysElement.classList.add('flip-clock');
-    }
-    prevDays = newDays;
-};
-
-const updateHours = (newHours) => {
-    if (prevHours !== null && prevHours !== newHours) {
-        hoursElement.classList.remove('flip-clock');
-        void hoursElement.offsetWidth; 
-        hoursElement.innerText = newHours;
-        hoursElement.classList.add('flip-clock');
-    }
-    prevHours = newHours;
-};
-
-const updateMinutes = (newMinutes) => {
-    if (prevMinutes !== null && prevMinutes !== newMinutes) {
-        minutesElement.classList.remove('flip-clock');
-        void minutesElement.offsetWidth; 
-        minutesElement.innerText = newMinutes;
-        minutesElement.classList.add('flip-clock');
-    }
-    prevMinutes = newMinutes;
-};
-
-const updateSeconds = (newSeconds) => {
-    if (prevSeconds !== null && prevSeconds !== newSeconds) {
-        secondsElement.classList.remove('flip-clock');
-        void secondsElement.offsetWidth;
-        secondsElement.innerText = formatTime(newSeconds);
-        secondsElement.classList.add('flip-clock');
-    }
-    prevSeconds = newSeconds;
-};
-const updateAndAnimate = (element, newValue) => {
-    if (element.innerText !== newValue) {
-        element.classList.remove('flip-clock');
-        void element.offsetWidth; 
-        element.innerText = newValue;
-        element.classList.add('flip-clock');
-    }
-};
-
-const formatTime = (time) => {
-    return time < 10 ? `0${time}` : time;
-};
 
 const changeBackgroundImage = () => {
+    const images = [
+        "snow (1980 x 1320).jpg",
+        "snow2 (1980 x 1320).jpg",
+        "snow3 (1980 x 1320).jpg"
+    ];
+
+    let currentImageIndex = 0;
+
     website.style.backgroundImage = `url('${images[currentImageIndex]}')`;
     currentImageIndex = (currentImageIndex + 1) % images.length;
 };
@@ -143,5 +100,3 @@ setTimeout(() => {
 setTimeout(() => {
     countdownContainer.style.opacity = 1;
 }, 1000);
-
-
