@@ -16,7 +16,7 @@ const formatTime = (time) => {
 const updateAndAnimate = (element, newValue, prevValue) => {
     if (prevValue !== newValue) {
         element.classList.remove('flip-clock');
-        void element.offsetWidth; // Trigger reflow to restart the animation
+        void element.offsetWidth; 
         element.innerText = newValue;
         element.classList.add('flip-clock');
     }
@@ -73,18 +73,19 @@ const createSnowflakes = () => {
 
 createSnowflakes();
 
+const images = [
+    "snow (1980 x 1320).jpg",
+    "snow2 (1980 x 1320).jpg",
+    "snow3 (1980 x 1320).jpg"
+];
+
+let currentImageIndex = 0;
+
 const changeBackgroundImage = () => {
-    const images = [
-        "snow (1980 x 1320).jpg",
-        "snow2 (1980 x 1320).jpg",
-        "snow3 (1980 x 1320).jpg"
-    ];
-
-    let currentImageIndex = 0;
-
     website.style.backgroundImage = `url('${images[currentImageIndex]}')`;
     currentImageIndex = (currentImageIndex + 1) % images.length;
 };
+
 
 countdown();
 changeBackgroundImage();
@@ -100,3 +101,6 @@ setTimeout(() => {
 setTimeout(() => {
     countdownContainer.style.opacity = 1;
 }, 1000);
+
+
+
